@@ -1,12 +1,9 @@
+import json
 import requests
-
-API_URL = "https://api-inference.huggingface.co/models/openai-gpt"
-headers = {"Authorization": "Bearer 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"}
-
+API_URL = "https://api-inference.huggingface.co/models/gpt2"
+headers = {"Authorization": f"Bearer {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}"}
 def query(payload):
-	response = requests.post(API_URL, headers=headers, json=payload)
-	return response.json()
-	
-output = query({
-	"inputs": "Can you please let us know more details about your ",
-})
+    data = json.dumps(payload)
+    response = requests.request("POST", API_URL, headers=headers, data=data)
+    return json.loads(response.content.decode("utf-8"))
+data = query("Can you please let us know more details about your ")
